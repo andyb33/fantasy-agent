@@ -17,7 +17,7 @@ import sys
 import traceback
 
 from . import brain, config, espn, telegram, timing
-from .yahoo import Yahoo
+from .yahoo import Yahoo, YahooError
 
 STATE_FILE = os.environ.get("STATE_FILE", "state.json")
 UTC = dt.timezone.utc
@@ -193,11 +193,17 @@ def run(dry=False, force=None):
     games = espn.schedule(et_today - dt.timedelta(days=1), max(week_end_guess(now), et_today + dt.timedelta(days=1)))
 
     y = Yahoo()
-    if state.get("team_key"):
-        y.team_key, y.league_key = state["team_key"], state["league_key"]
-    else:
-        y.find_team()
-    rosters = y.all_rosters()
+    try:
+        if state.get("team_key"):
+            y.team_key, y.league_key = state["team_key"], state["league_key"]
+        else:
+            y.find_team()
+        rosters = y.all_rosters()
+    except YahooError as e:
+        if "HTTP 403" not in str(e):
+            raise
+        print("Yahoo access not approved yet; running in limited mode with the manual roster.")
+        return run_limited(now, state, injuries, games, dry, force)
     fas = y.free_agents("lastweek", 25)
     my_players = rosters[y.team_key]["players"]
 
@@ -236,6 +242,68 @@ def run(dry=False, force=None):
     names = {p["key"]: p["name"] for t in rosters.values() for p in t["players"]}
     state.update(team_key=y.team_key, league_key=y.league_key, sigs=sigs, rostered=rostered,
                  names={**state.get("names", {}), **names}, last_run=now.isoformat())
+    if not dry:
+        save_state(state)
+
+
+def run_limited(now, state, injuries, games, dry, force):
+    """Until Yahoo approves: watch the roster in config.MANUAL_ROSTER using ESPN
+    injury news and the schedule. No free-agent data, so no pickup advice."""
+    players = [{"name": n, "team": t, "slot": s} for n, t, s in config.MANUAL_ROSTER]
+    old = state.get("manual_sigs")
+    sigs, triggers = {}, []
+    for p in players:
+        inj = espn_info(injuries, p["name"]) or {}
+        sig = f"{inj.get('status', '')}|{inj.get('updated', '')}"
+        sigs[p["name"]] = sig
+        if old is not None and old.get(p["name"]) not in (None, sig) and plays_soon(games, p["team"], now):
+            triggers.append(f"YOUR player {p['name']} ({p['team']}, slot {p['slot']}) injury status changed: "
+                            f"ESPN '{inj.get('status', 'healthy')}'"
+                            f"{' - ' + inj['news'] if inj.get('news') else ''}")
+
+    pretip = timing.pretip_due(now, games, state)
+    jobs = []
+    if force == "pretip" or pretip:
+        jobs.append(("pretip", pretip or timing.next_slate(now, games)))
+    elif triggers:
+        jobs.append(("live", None))
+
+    week_end = week_end_guess(now)
+    for kind, slate in jobs:
+        lines = [
+            f"NOW: {now.astimezone(timing.LOCAL):%a %Y-%m-%d %H:%M} KST (Pacific: {now.astimezone(timing.PT):%a %H:%M})",
+            "LIMITED MODE: Yahoo data isn't connected yet, so there are no stats, matchup or free-agent list. "
+            "Focus on lineup and injury decisions among Andy's own players. Don't recommend specific free agents. "
+            "Keep it short.",
+        ]
+        if slate and slate[1]:
+            tonight = [g for g in games if g["et_date"] == slate[0]]
+            lines.append(f"TONIGHT'S SLATE: first tip {timing.fmt_local(slate[1])} KST. Games: " +
+                         ", ".join(f"{g['away']}@{g['home']} {timing.fmt_local(g['tip_utc'])}" for g in tonight))
+        lines.append(f"\nANDY'S ROSTER (slot, games left through {week_end:%a %b %d}):")
+        for p in players:
+            gl = team_games(games, p["team"], now, week_end)
+            inj = espn_info(injuries, p["name"])
+            lines.append(f"- {p['name']} ({p['team']}) slot={p['slot']} | {len(gl)} games left this week | next game "
+                         f"{timing.fmt_local(gl[0]['tip_utc']) + ' KST' if gl else 'none this week'}"
+                         + (f" | injury: {inj['status']} - {inj['injury']} - {inj['news'][:220]}" if inj else ""))
+        if triggers:
+            lines.append("\nTRIGGERS (what just changed):")
+            lines += ["- " + t for t in triggers]
+        ctx = "\n".join(lines)
+        msg = brain.write(kind, ctx)
+        if dry:
+            print(f"===== {kind} context =====\n{ctx}\n===== {kind} message =====\n{msg}")
+            continue
+        if msg:
+            telegram.send(msg)
+            state.setdefault("recent_alerts", []).append({"at": timing.fmt_local(now), "text": msg})
+            state["recent_alerts"] = state["recent_alerts"][-10:]
+        if kind == "pretip" and slate and slate[0]:
+            state["pretip_sent"] = slate[0]
+    if not jobs:
+        print(f"{now:%H:%M}Z: nothing new (limited mode).")
+    state.update(manual_sigs=sigs, last_run=now.isoformat())
     if not dry:
         save_state(state)
 

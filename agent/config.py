@@ -18,9 +18,35 @@ LEAGUE_NOTES = """\
 - 8-team Yahoo NBA league, Head-to-Head Points, weekly matchups (Mon-Sun, Pacific time).
 - Scoring: PTS 1, REB 1.2, AST 1.5, STL 3, BLK 3, TO -1. Bigs who rebound and block are very valuable.
 - 6 adds per week. No waivers: free agents are added instantly, first come first served.
-- Injured players can be added straight to the roster. 4 IL spots.
+- Added players are active right away (the same day), so a pickup before tip-off counts that night.
+- Injured players can be added straight to the roster. 4 IL spots. Yahoo usually only allows
+  Out/Injured players in IL slots; a healthy or day-to-day player left on IL can block adds.
 - Daily lineups; the fantasy day resets at midnight Pacific.
 """
+
+# Used only until Yahoo approves API access (then your roster is read live).
+# (name, NBA team, lineup slot). Update when you make moves.
+MANUAL_ROSTER = [
+    ("Darius Acuff Jr.", "SAC", "PG"),
+    ("Ty Jerome", "MEM", "SG"),
+    ("Jaylen Brown", "PHI", "G"),
+    ("Jalen Johnson", "ATL", "SF"),
+    ("Karl-Anthony Towns", "NYK", "PF"),
+    ("Paul Reed", "DET", "F"),
+    ("Isaiah Hartenstein", "OKC", "C"),
+    ("Giannis Antetokounmpo", "MIA", "C"),
+    ("Derik Queen", "NOP", "Util"),
+    ("Peyton Watson", "CLE", "Util"),
+    ("Trae Young", "WAS", "BN"),
+    ("Stephon Castle", "SAS", "BN"),
+    ("Ajay Mitchell", "OKC", "BN"),
+    ("Matas Buzelis", "CHI", "BN"),
+    ("Payton Pritchard", "BOS", "BN"),
+    ("Paul George", "BOS", "BN"),
+    ("Jalen Suggs", "ORL", "IL"),
+    ("Ivica Zubac", "IND", "IL"),
+    ("Jusuf Nurkic", "UTA", "IL"),
+]
 
 # Where you live and when you sleep (alerts still buzz during sleep, but the
 # pre-tip brief is moved earlier so it lands before you go to bed).

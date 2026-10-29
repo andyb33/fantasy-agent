@@ -1,9 +1,9 @@
 name: Fantasy Agent
 
 on:
-  # Every 15 minutes. Turned on once Yahoo approves API access.
-  # schedule:
-  #   - cron: "*/15 * * * *"
+  # Every 15 minutes.
+  schedule:
+    - cron: "*/15 * * * *"
   workflow_dispatch:
     inputs:
       force:
