@@ -249,6 +249,7 @@ def main():
         run(dry=args.dry_run, force=args.force)
     except Exception as e:
         traceback.print_exc()
+        print(f"::error::{str(e)[:500]}")  # shows up on the run's summary page
         # Tell Andy once in a while if the agent is broken, instead of failing silently.
         state = load_state()
         now = now_utc()
