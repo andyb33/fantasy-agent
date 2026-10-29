@@ -13,14 +13,14 @@ jobs:
           TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "Missing ANTHROPIC_API_KEY secret"; exit 1; fi
+          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "::error::Missing ANTHROPIC_API_KEY secret"; exit 1; fi
           resp=$(curl -sS https://api.anthropic.com/v1/messages \
             -H "x-api-key: ${ANTHROPIC_API_KEY}" \
             -H "anthropic-version: 2023-06-01" \
             -H "content-type: application/json" \
             -d '{"model":"claude-haiku-5-5","max_tokens":60,"messages":[{"role":"user","content":"In one short sentence, greet a fantasy basketball manager and say the AI side of their agent is working."}]}')
           text=$(echo "$resp" | jq -r '.content[0].text // empty')
-          if [ -z "$text" ]; then echo "Anthropic API error: $(echo "$resp" | jq -c '.error // .')"; exit 1; fi
+          if [ -z "$text" ]; then echo "::error::Anthropic API error: $(echo "$resp" | jq -c '.error // .')"; exit 1; fi
           echo "Claude replied: $text"
           curl -sS -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${CHAT_ID}" --data-urlencode "text=🤖 ${text}" > /dev/null
