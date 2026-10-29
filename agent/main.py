@@ -275,6 +275,7 @@ def run_limited(now, state, injuries, games, dry, force):
             "LIMITED MODE: Yahoo data isn't connected yet, so there are no stats, matchup or free-agent list. "
             "Focus on lineup and injury decisions among Andy's own players. Don't recommend specific free agents. "
             "Keep it short.",
+            f"NOTES: {config.MANUAL_NOTES}",
         ]
         if slate and slate[1]:
             tonight = [g for g in games if g["et_date"] == slate[0]]

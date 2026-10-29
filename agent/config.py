@@ -24,6 +24,9 @@ LEAGUE_NOTES = """\
 - Daily lineups; the fantasy day resets at midnight Pacific.
 """
 
+# Extra facts for limited mode (Yahoo supplies these live once approved).
+MANUAL_NOTES = "Adds used this week (week ending Sun Nov 1): 5 of 6, so only 1 add left. Save it for something clear."
+
 # Used only until Yahoo approves API access (then your roster is read live).
 # (name, NBA team, lineup slot). Update when you make moves.
 MANUAL_ROSTER = [
