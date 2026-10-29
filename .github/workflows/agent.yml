@@ -1,0 +1,67 @@
+name: Fantasy Agent
+
+on:
+  # Every 15 minutes. Turned on once Yahoo approves API access.
+  # schedule:
+  #   - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Force a brief now (reset or pretip), or leave blank for a normal check"
+        required: false
+        default: ""
+      dry_run:
+        description: "Dry run (show the message in the log, don't send or save)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write   # to save the agent's memory on the 'state' branch
+
+concurrency:
+  group: fantasy-agent
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Load the agent's memory
+        run: |
+          git fetch --depth 1 origin state 2>/dev/null && git show origin/state:state.json > state.json || echo '{}' > state.json
+          cp state.json /tmp/state.before.json
+
+      - name: Run the agent
+        env:
+          YAHOO_CLIENT_ID: ${{ secrets.YAHOO_CLIENT_ID }}
+          YAHOO_CLIENT_SECRET: ${{ secrets.YAHOO_CLIENT_SECRET }}
+          YAHOO_REFRESH_TOKEN: ${{ secrets.YAHOO_REFRESH_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          FORCE: ${{ inputs.force }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          args=""
+          [ -n "$FORCE" ] && args="$args --force $FORCE"
+          [ "$DRY_RUN" = "true" ] && args="$args --dry-run"
+          python -m agent.main $args
+
+      - name: Save the agent's memory
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cmp -s state.json /tmp/state.before.json && { echo "No changes to save."; exit 0; }
+          dir=$(mktemp -d) && cp state.json "$dir/" && cd "$dir"
+          git init -q && git checkout -q -b state
+          git -c user.name="fantasy-agent" -c user.email="actions@users.noreply.github.com" add state.json
+          git -c user.name="fantasy-agent" -c user.email="actions@users.noreply.github.com" commit -qm "Update agent memory"
+          git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" state
