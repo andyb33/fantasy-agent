@@ -25,27 +25,28 @@ LEAGUE_NOTES = """\
 """
 
 # Extra facts for limited mode (Yahoo supplies these live once approved).
-MANUAL_NOTES = "Adds used this week (week ending Sun Nov 1): 5 of 6, so only 1 add left. Save it for something clear."
+MANUAL_NOTES = "Adds used this week (week ending Sun Nov 1): 6 of 6; no adds remaining. Devin Vassell added Oct 31 KST with Jaylen Brown moved to IL; nobody dropped."
 
 # Used only until Yahoo approves API access (then your roster is read live).
 # (name, NBA team, lineup slot). Update when you make moves.
 MANUAL_ROSTER = [
     ("Darius Acuff Jr.", "SAC", "PG"),
     ("Ty Jerome", "MEM", "SG"),
-    ("Jaylen Brown", "PHI", "G"),
+    ("Jaylen Brown", "PHI", "IL"),
     ("Jalen Johnson", "ATL", "SF"),
-    ("Karl-Anthony Towns", "NYK", "PF"),
-    ("Paul Reed", "DET", "F"),
+    ("Karl-Anthony Towns", "NYK", "BN"),
+    ("Paul Reed", "DET", "C"),
     ("Isaiah Hartenstein", "OKC", "C"),
-    ("Giannis Antetokounmpo", "MIA", "C"),
-    ("Derik Queen", "NOP", "Util"),
-    ("Peyton Watson", "CLE", "Util"),
-    ("Trae Young", "WAS", "BN"),
-    ("Stephon Castle", "SAS", "BN"),
-    ("Ajay Mitchell", "OKC", "BN"),
+    ("Giannis Antetokounmpo", "MIA", "BN"),
+    ("Derik Queen", "NOP", "F"),
+    ("Peyton Watson", "CLE", "PF"),
+    ("Trae Young", "WAS", "Util"),
+    ("Stephon Castle", "SAS", "Util"),
+    ("Ajay Mitchell", "OKC", "G"),
     ("Matas Buzelis", "CHI", "BN"),
     ("Payton Pritchard", "BOS", "BN"),
     ("Paul George", "BOS", "BN"),
+    ("Devin Vassell", "SAS", "BN"),
     ("Jalen Suggs", "ORL", "IL"),
     ("Ivica Zubac", "IND", "IL"),
     ("Jusuf Nurkic", "UTA", "IL"),
