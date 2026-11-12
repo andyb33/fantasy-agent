@@ -25,30 +25,30 @@ LEAGUE_NOTES = """\
 """
 
 # Extra facts for limited mode (Yahoo supplies these live once approved).
-MANUAL_NOTES = "Adds used this week (Nov 2-Nov 8): 0 of 6; 6 adds remaining, assuming no pickups yet this week. Roster synced Nov 2 KST: Devin Vassell dropped; Ty Jerome and Jaylen Brown active. Jalen Johnson and Peyton Watson questionable; Jalen Suggs, Ivica Zubac and Jusuf Nurkic on IL. One IL spot available."
+MANUAL_NOTES = "Roster synced from Nov 12 KST screenshot. Adds used this week (Nov 9-Nov 15): unknown of 6; confirm before recommending an add. Jared McCain and Grayson Allen are rostered; Peyton Watson and Jusuf Nurkic are no longer rostered. Ivica Zubac active; Paul George, Ajay Mitchell and Jalen Suggs on IL, with one IL slot empty. Slots reflect the screenshot day, not future lineups. Telegram receipt confirmed by Andy Nov 12."
 
 # Used only until Yahoo approves API access (then your roster is read live).
 # (name, NBA team, lineup slot). Update when you make moves.
 MANUAL_ROSTER = [
-    ("Darius Acuff Jr.", "SAC", "PG"),
-    ("Jaylen Brown", "PHI", "SG"),
-    ("Trae Young", "WAS", "G"),
-    ("Paul George", "BOS", "SF"),
-    ("Giannis Antetokounmpo", "MIA", "PF"),
-    ("Karl-Anthony Towns", "NYK", "F"),
-    ("Derik Queen", "NOP", "C"),
+    ("Trae Young", "WAS", "PG"),
+    ("Ty Jerome", "MEM", "SG"),
+    ("Payton Pritchard", "BOS", "G"),
+    ("Matas Buzelis", "CHI", "SF"),
+    ("Karl-Anthony Towns", "NYK", "PF"),
+    ("Derik Queen", "NOP", "F"),
     ("Isaiah Hartenstein", "OKC", "C"),
+    ("Ivica Zubac", "IND", "C"),
     ("Stephon Castle", "SAS", "Util"),
-    ("Ty Jerome", "MEM", "Util"),
-    ("Paul Reed", "DET", "BN"),
-    ("Ajay Mitchell", "OKC", "BN"),
-    ("Payton Pritchard", "BOS", "BN"),
-    ("Peyton Watson", "CLE", "BN"),
+    ("Jared McCain", "OKC", "Util"),
+    ("Darius Acuff Jr.", "SAC", "BN"),
+    ("Jaylen Brown", "PHI", "BN"),
+    ("Giannis Antetokounmpo", "MIA", "BN"),
     ("Jalen Johnson", "ATL", "BN"),
-    ("Matas Buzelis", "CHI", "BN"),
+    ("Paul Reed", "DET", "BN"),
+    ("Grayson Allen", "CHA", "BN"),
+    ("Paul George", "BOS", "IL"),
+    ("Ajay Mitchell", "OKC", "IL"),
     ("Jalen Suggs", "ORL", "IL"),
-    ("Ivica Zubac", "IND", "IL"),
-    ("Jusuf Nurkic", "UTA", "IL"),
 ]
 
 # Where you live and when you sleep (alerts still buzz during sleep, but the
