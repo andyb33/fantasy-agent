@@ -25,7 +25,7 @@ LEAGUE_NOTES = """\
 """
 
 # Extra facts for limited mode (Yahoo supplies these live once approved).
-MANUAL_NOTES = "Roster synced from Nov 12 KST screenshot. Adds used this week (Nov 9-Nov 15): unknown of 6; confirm before recommending an add. Jared McCain and Grayson Allen are rostered; Peyton Watson and Jusuf Nurkic are no longer rostered. Ivica Zubac active; Paul George, Ajay Mitchell and Jalen Suggs on IL, with one IL slot empty. Slots reflect the screenshot day, not future lineups. Telegram receipt confirmed by Andy Nov 12."
+MANUAL_NOTES = "Roster synced from Nov 12 KST screenshot. Adds used this week (Nov 9-Nov 15): 2 of 6 (Andy recalls McCain and Allen as the two adds); 4 remaining, pending Yahoo confirmation. Jared McCain and Grayson Allen are rostered; Peyton Watson and Jusuf Nurkic are no longer rostered. Ivica Zubac active; Paul George, Ajay Mitchell and Jalen Suggs on IL, with one IL slot empty. Slots reflect the screenshot day, not future lineups. Telegram receipt confirmed by Andy Nov 12."
 
 # Used only until Yahoo approves API access (then your roster is read live).
 # (name, NBA team, lineup slot). Update when you make moves.
