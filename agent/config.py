@@ -25,7 +25,7 @@ LEAGUE_NOTES = """\
 """
 
 # Extra facts for limited mode (Yahoo supplies these live once approved).
-MANUAL_NOTES = "Roster synced from Nov 26 KST screenshot; slots show the screenshot, not future lineups. Adds used this week (Nov 23-Nov 29): unknown of 6; do not reuse the old Nov 9-Nov 15 count. Planned, NOT confirmed completed: swap Jaylen Brown (Out in screenshot) to IL and activate Giannis; Andy wrote 'bron', interpreted as Brown, not LeBron. Planned, NOT completed: drop Cam Spencer for Dillon Brooks after 17:00 KST Nov 26. Keep Spencer rostered until confirmed; do not claim Brooks is owned. Yahoo API request was rejected; continue manual mode."
+MANUAL_NOTES = "Roster synced from Nov 26 KST screenshot; slots show the screenshot, not future lineups. Adds used this week (Nov 23-Nov 29): 0 of 6; 6 remaining, confirmed by Andy Nov 26. Opponent is weaker this week; no need to force streaming moves. Planned, NOT confirmed completed: swap Jaylen Brown (Out in screenshot) to IL and activate Giannis; Andy wrote 'bron', interpreted as Brown, not LeBron. Planned, NOT completed: drop Cam Spencer for Dillon Brooks after 17:00 KST Nov 26. Keep Spencer rostered until confirmed; do not claim Brooks is owned. Yahoo API request was rejected; continue manual mode."
 
 # Used only until Yahoo approves API access (then your roster is read live).
 # (name, NBA team, lineup slot). Update when you make moves.
