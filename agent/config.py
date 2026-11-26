@@ -25,30 +25,28 @@ LEAGUE_NOTES = """\
 """
 
 # Extra facts for limited mode (Yahoo supplies these live once approved).
-MANUAL_NOTES = "Roster synced from Nov 12 KST screenshot. Adds used this week (Nov 9-Nov 15): 2 of 6 (Andy recalls McCain and Allen as the two adds); 4 remaining, pending Yahoo confirmation. Jared McCain and Grayson Allen are rostered; Peyton Watson and Jusuf Nurkic are no longer rostered. Ivica Zubac active; Paul George, Ajay Mitchell and Jalen Suggs on IL, with one IL slot empty. Slots reflect the screenshot day, not future lineups. Telegram receipt confirmed by Andy Nov 12."
+MANUAL_NOTES = "Roster synced from Nov 26 KST screenshot; slots show the screenshot, not future lineups. Adds used this week (Nov 23-Nov 29): unknown of 6; do not reuse the old Nov 9-Nov 15 count. Planned, NOT confirmed completed: swap Jaylen Brown (Out in screenshot) to IL and activate Giannis; Andy wrote 'bron', interpreted as Brown, not LeBron. Planned, NOT completed: drop Cam Spencer for Dillon Brooks after 17:00 KST Nov 26. Keep Spencer rostered until confirmed; do not claim Brooks is owned. Yahoo API request was rejected; continue manual mode."
 
 # Used only until Yahoo approves API access (then your roster is read live).
 # (name, NBA team, lineup slot). Update when you make moves.
 MANUAL_ROSTER = [
-    ("Trae Young", "WAS", "PG"),
-    ("Ty Jerome", "MEM", "SG"),
-    ("Payton Pritchard", "BOS", "G"),
-    ("Matas Buzelis", "CHI", "SF"),
-    ("Karl-Anthony Towns", "NYK", "PF"),
+    ("Ajay Mitchell", "OKC", "PG"),
+    ("Stephon Castle", "SAS", "SG"),
+    ("Ty Jerome", "MEM", "G"),
+    ("Jaylen Brown", "PHI", "SF"),
+    ("Matas Buzelis", "CHI", "PF"),
     ("Derik Queen", "NOP", "F"),
     ("Isaiah Hartenstein", "OKC", "C"),
-    ("Ivica Zubac", "IND", "C"),
-    ("Stephon Castle", "SAS", "Util"),
-    ("Jared McCain", "OKC", "Util"),
-    ("Darius Acuff Jr.", "SAC", "BN"),
-    ("Jaylen Brown", "PHI", "BN"),
-    ("Giannis Antetokounmpo", "MIA", "BN"),
-    ("Jalen Johnson", "ATL", "BN"),
+    ("Karl-Anthony Towns", "NYK", "C"),
+    ("Darius Acuff Jr.", "SAC", "Util"),
+    ("Cam Spencer", "MEM", "Util"),
+    ("Trae Young", "WAS", "BN"),
+    ("Payton Pritchard", "BOS", "BN"),
+    ("Paul George", "BOS", "BN"),
     ("Paul Reed", "DET", "BN"),
-    ("Grayson Allen", "CHA", "BN"),
-    ("Paul George", "BOS", "IL"),
-    ("Ajay Mitchell", "OKC", "IL"),
-    ("Jalen Suggs", "ORL", "IL"),
+    ("Ivica Zubac", "IND", "BN"),
+    ("Jalen Johnson", "ATL", "BN"),
+    ("Giannis Antetokounmpo", "MIA", "IL"),
 ]
 
 # Where you live and when you sleep (alerts still buzz during sleep, but the
